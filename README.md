@@ -56,6 +56,15 @@ Proyecto-Gapminder/
 - **Shiny / Flexdashboard** (visualizaciones dinámicas)  
 - **LaTeX** (para presentación PDF con formato académico)  
 
+Nota: Esta es una versión parcial del proyecto.  
+Se ha realizado:
+- Importación y depuración de datos de esperanza de vida en España
+- Creación de la estructura del repositorio
+- Base depurada lista para análisis
 
-
+Pendiente para una versión completa:
+- Gráficos exploratorios
+- Informe técnico en RMarkdown
+- Dashboard dinámico
+- Presentación reproducible
 
