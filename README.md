@@ -1,16 +1,17 @@
 # PROYECTORETO2
 Proyecto Ciencia de Datos Reproducible 
+- **Julia Valverde**  
+Máster en Behavioral Data Science  
+2025
 
 Datos utilizados: Gapminder 
 
 Este proyecto forma parte del Máster en Behavioral Data Science y tiene como objetivo poner en práctica todas las fases de un proyecto de **Ciencia de Datos Reproducible**: desde la carga y depuración de datos hasta la creación de dashboards dinámicos y la comunicación de resultados.
 
----
 
 # Objetivo principal
 Analizar la evolución de indicadores socioeconómicos y de salud a nivel mundial utilizando la base de datos **Gapminder**, aplicando técnicas de ciencia de datos reproducible.
 
----
 
 # Objetivos específicos
 1. Importar y depurar los datos de Gapminder, generando nuevas variables si es necesario.  
@@ -19,7 +20,6 @@ Analizar la evolución de indicadores socioeconómicos y de salud a nivel mundia
 4. Generar un **informe técnico** en R Markdown que combine resultados, tablas y gráficos.  
 5. Preparar una **presentación reproducible** en R Markdown/LaTeX.  
 
----
 
 # Estructura del repositorio
 
@@ -46,7 +46,6 @@ Proyecto-Gapminder/
 └── README.md <- Este archivo
 
 
----
 
 # Tecnologías utilizadas
 - **RStudio** (IDE principal)  
@@ -55,11 +54,6 @@ Proyecto-Gapminder/
 - **Shiny / Flexdashboard** (visualizaciones dinámicas)  
 - **LaTeX** (para presentación PDF con formato académico)  
 
----
 
-# Autoría
-- **Julia Valverde**  
-Máster en Behavioral Data Science  
-2025
 
 
