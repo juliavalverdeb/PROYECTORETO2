@@ -1,11 +1,10 @@
 ---
 title: "Proyecto de Ciencia de Datos Reproducible"
-output: html_document
+output: pdf_document
 date: "2025-09-01"
 toc: TRUE
 number_sections: TRUE
 toc_true: TRUE
-
 ---
 
 ```{r setup, include=FALSE}
@@ -45,6 +44,8 @@ Los objetivos específicos son:
 
 - Analizar la relación entre esperanza de vida y tasa de fertilidad.
 
+## Preguntas de investigación
+
 Se pretender responder a las siguientes cuestiones: 
 
 - ¿Cómo ha evolucionado la esperanza de vida en los diferentes continentes entre 
@@ -58,23 +59,22 @@ largo de las décadas?
 - ¿Cómo se distribuye la esperanza de vida a nivel mundial en momentos clave (por 
 ejemplo 1950, 1980 y 2019)?
 
+## Visualización del dashboard: 
+
+El dashboard interactivo se ejecuta desde RStudio mediante el archivo dashboard.Rmd. Para visualizarlo, se debe abrir el archivo dentro del entorno del proyecto y hacer clic en “Run Document”. La aplicación permite filtrar por continente y rango de años, y explorar mapas, gráficos de dispersión y series temporales.
+
 
 ## Datos 
 
-```{r, message=FALSE, warning=FALSE}
-
-install.packages("here")
-install.packages("kableExtra")
+```{r}
 
 datos <- read_csv(here("Datos/base_depurada/LifeExpact_Fertility_dep.csv"))
 
-head(datos)
-
 ```
 
-# Tabla resumen
+## Tabla resumen
 
-```{r}
+```{r, echo=FALSE}
 
 datos <- read_csv("../../Datos/base_depurada/LifeExpact_Fertility_dep.csv")
 
@@ -90,12 +90,13 @@ tabla_resumen %>%
   kbl(caption = "Promedios de esperanza de vida y fertilidad por continente (1950–2019)") %>%
   kable_styling(full_width = FALSE, position = "center")
 
+fig.align = "center"
 
 ```
 
 # Evolucion de la esperanza de vida 
 
-```{r}
+```{r, echo=FALSE}
 
 ggplot(datos %>% filter(year >= 1950),
        aes(x = year, y = life_expectancy, color = continent)) +
@@ -107,22 +108,41 @@ ggplot(datos %>% filter(year >= 1950),
   ) +
   theme_minimal()
 
+fig.align = "center"
 
 ``` 
 
 # Relación entre esperanza de vida y fertilidad 
 
-```{r}
+
+```{r grafico_fertilidad_vida, echo=FALSE, fig.cap="Relación entre tasa de fertilidad y esperanza de vida (1950–2019)"}
 
 ggplot(datos %>% filter(year >= 1950),
-       aes(x = year, y = life_expectancy, color = continent)) +
-  geom_line(stat = "summary", fun = "mean", size = 1) +
+       aes(x = fertility_rate, y = life_expectancy, color = continent)) +
+  geom_point(alpha = 0.6, size = 3) +
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed") +
   labs(
-    title = "Evolución de la esperanza de vida media por continente (1950–2019)",
-    x = "Año",
-    y = "Esperanza de vida (años)"
+    title = "Relación entre fertilidad y esperanza de vida",
+    x = "Tasa de fertilidad (hijos por mujer)",
+    y = "Esperanza de vida (años)",
+    color = "Continente"
   ) +
   theme_minimal()
 
+fig.align = "center"
 
+```
 
+## Conclusiones 
+
+El análisis realizado sobre los datos de Gapminder entre 1950 y 2019 permite extraer varias conclusiones relevantes en torno a la evolución demográfica global:
+
+- Incremento sostenido de la esperanza de vida: Todos los continentes han experimentado un aumento progresivo en la esperanza de vida a lo largo de las décadas, aunque con ritmos distintos. Europa y América presentan los valores más altos, mientras que África muestra una evolución más lenta, evidenciando desigualdades persistentes.
+
+- Relación inversa entre fertilidad y longevidad: Se observa una clara tendencia negativa entre la tasa de fertilidad y la esperanza de vida. Los países con menor número de hijos por mujer tienden a presentar mayores niveles de longevidad, lo que sugiere que la transición demográfica está vinculada a mejoras en salud, educación y calidad de vida.
+
+- Brecha persistente entre continentes: La diferencia en esperanza de vida entre Europa y África se mantiene significativa a lo largo del periodo analizado. Aunque ambos han mejorado sus indicadores, la distancia entre ellos refleja desigualdades estructurales que requieren atención en políticas públicas.
+
+- Distribución desigual en momentos clave: En los años seleccionados (1950, 1980 y 2019), se evidencia una ampliación en la dispersión de la esperanza de vida entre países. Esto indica que, aunque el promedio global mejora, las diferencias internas entre regiones se han acentuado en ciertos periodos.
+
+En conjunto, estos hallazgos refuerzan la importancia de abordar los factores sociales, económicos y sanitarios que influyen en la longevidad, y de promover políticas que reduzcan las brechas entre regiones. El uso de herramientas reproducibles y visualizaciones interactivas ha permitido explorar estos patrones de forma accesible y dinámica.
