@@ -1,0 +1,187 @@
+---
+title: "Dashboard: Esperanza de vida (1950-2019)"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+
+---
+
+Column {data-width=300}
+-----------------------------------------------------------------------
+
+###  Descripción del proyecto
+
+Este dashboard interactivo forma parte de un proyecto de Ciencia de Datos reproducible cuyo objetivo principal es analizar la evolución de la **esperanza de vida** a nivel mundial entre los años **1950 y 2019**, y su relación con la **tasa de fertilidad**.
+
+#### ¿Qué puedes hacer aquí?
+
+- **Filtrar por continente** y **rango de años** para explorar los datos de forma personalizada.
+- Visualizar un **mapa mundial** con la esperanza de vida promedio por país.
+- Explorar la **relación entre fertilidad y longevidad** mediante un gráfico de dispersión.
+- Observar la **evolución temporal** de la esperanza de vida por continente.
+
+#### Datos utilizados
+
+Los datos provienen de la base de datos de [Gapminder](https://www.gapminder.org/data/), y han sido depurados para facilitar su análisis.
+
+---
+
+*Para más detalles técnicos, consulta el informe reproducible disponible en el repositorio del proyecto.*
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+# ===============================
+# Librerías necesarias
+# ===============================
+library(shiny)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(maps)
+library(here)
+
+# ===============================
+# Cargar base de datos
+# ===============================
+
+
+datos <- read_csv("C:/Users/Acer/Documents/MASTER BEHAVIORAL DATA SCIENCE/MODULO 8/RETO 1/Datos Gapminder/valverde_j_m8_reto2/Datos/base_depurada/LifeExpact_Fertility_dep.csv")
+
+```
+
+### Inputs interactivos 
+
+```{r}
+
+# Chunk normal: Inputs visibles y reactivos
+selectInput("continents_sel", "Selecciona continente(s):",
+            choices = unique(datos$continent),
+            selected = unique(datos$continent),
+            multiple = TRUE)
+
+sliderInput("year_range", "Selecciona rango de años:",
+            min = min(datos$year),
+            max = max(datos$year),
+            value = c(1950, 2019),
+            step = 1,
+            sep = "")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Mapa mundial de la esperanza de vida
+
+```{r, echo=FALSE}
+
+renderPlot({
+  req(input$year_range, input$continents_sel)
+
+  # ------------------------------
+  # 1. Calcular promedio de esperanza de vida por país
+  # ------------------------------
+  df_mean <- datos %>%
+    filter(year >= input$year_range[1],
+           year <= input$year_range[2],
+           continent %in% input$continents_sel) %>%
+    group_by(country) %>%
+    summarise(mean_life = mean(life_expectancy, na.rm = TRUE))
+
+  # 2. Obtener mapa base
+  world_map <- map_data("world")
+
+  # 3. Unir datos de países con mapa
+  map_data_joined <- world_map %>%
+    left_join(df_mean, by = c("region" = "country"))
+
+  # 4. Dibujar mapa
+  ggplot(map_data_joined, aes(x = long, y = lat, group = group, fill = mean_life)) +
+    geom_polygon(color = "white") +
+    scale_fill_gradient(low = "lightblue", high = "darkred", na.value = "grey90") +
+    labs(
+      title = "Esperanza de vida promedio",
+      subtitle = paste("Periodo:", input$year_range[1], "-", input$year_range[2]),
+      fill = "Años"
+    ) +
+    theme_minimal() +
+    coord_fixed(1.3)
+})
+
+
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Relación entre esperanza de vida y fertilidad 
+
+```{r, echo=FALSE}
+
+renderPlot({
+  req(input$year_range, input$continents_sel)
+
+  # ------------------------------
+  # 1. Filtrar datos según selección del usuario
+  # ------------------------------
+  df_scatter <- datos %>%
+    filter(year >= input$year_range[1],
+           year <= input$year_range[2],
+           continent %in% input$continents_sel)
+
+  # 2. Crear scatterplot
+  ggplot(df_scatter, aes(x = fertility_rate, y = life_expectancy, color = continent)) +
+    geom_point(alpha = 0.6, size = 3) +
+    geom_smooth(method = "lm", se = FALSE, linetype = "dashed") +
+    labs(
+      title = "Relación entre fertilidad y esperanza de vida",
+      x = "Tasa de fertilidad (hijos por mujer)",
+      y = "Esperanza de vida (años)",
+      color = "Continente"
+    ) +
+    theme_minimal()
+})
+
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Evolución temporal de la esperanza de vida por continente
+
+```{r, echo=FALSE}
+
+renderPlot({
+  req(input$year_range, input$continents_sel)
+
+  # ------------------------------
+  # 1. Calcular promedio de esperanza de vida por continente y año
+  # ------------------------------
+  df_time <- datos %>%
+    filter(year >= input$year_range[1],
+           year <= input$year_range[2],
+           continent %in% input$continents_sel) %>%
+    group_by(year, continent) %>%
+    summarise(mean_life = mean(life_expectancy, na.rm = TRUE))
+
+  # 2. Serie temporal
+  ggplot(df_time, aes(x = year, y = mean_life, color = continent)) +
+    geom_line(size = 1.2) +
+    labs(
+      title = "Evolución de la esperanza de vida por continente",
+      x = "Año",
+      y = "Esperanza de vida promedio",
+      color = "Continente"
+    ) +
+    theme_minimal()
+})
+
+
+```
+
