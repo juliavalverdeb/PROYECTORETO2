@@ -40,7 +40,7 @@ datos_life <- datos_life %>%
                                  origin = "country.name",
                                  destination = "continent"))
 
-# 3. Transformar a formato largo
+# 4. Transformar a formato largo
 
 datos_largos <- datos_life %>%
   pivot_longer(
@@ -51,7 +51,7 @@ datos_largos <- datos_life %>%
   mutate(year = as.integer(year))
 
 
-# 4. Filtrar rango de años (1950-2019)
+# 5. Filtrar rango de años (1950-2019)
 
 life_long <- datos_largos %>%
   filter(year >= 1950, year <= 2019)
@@ -66,15 +66,15 @@ datos <- life_long %>%
 
   mutate(year = as.integer(year))
 
-# 8. Guardar base depurada final
+# 7. Guardar base depurada final
 
 write_csv(datos, "Datos/base_depurada/LifeExpact_Fertility_dep.csv")
   
-# 9. Comprobación rápida
+# 8. Comprobación rápida
 print(head(datos))
 print(dim(datos))
 
-# 5. Gráfico de comprobación (promedio por continente)
+# 9. Gráfico de comprobación (promedio por continente)
 ggplot(datos %>%
          group_by(continent, year) %>%
          summarise(life_expectancy = mean(life_expectancy, na.rm = TRUE), .groups = "drop"),
@@ -86,3 +86,4 @@ ggplot(datos %>%
     y = "Esperanza de vida"
   ) +
   theme_minimal()
+
