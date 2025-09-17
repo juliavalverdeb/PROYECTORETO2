@@ -1,0 +1,68 @@
+---
+title: "Resumen proyecto Gapminder"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+date: "2025-09-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## R Markdown
+
+Este es un resumen del proyecto Gapminder. Se analizan indicadores demográficos clave entre 1950 y 2019, con especial atención a la esperanza de vida y la tasa de fertilidad.
+
+## Objetivos del proyecto 
+
+- Analizar la evolución de la esperanza de vida por continente.
+
+- Estudiar la relación entre fertilidad y longevidad.
+
+- Identificar brechas regionales persistentes.
+
+## Tabla resumen
+
+```{r cars, echo = TRUE}
+
+
+library(dplyr)
+library(readr)
+library(kableExtra)
+
+datos <- read_csv("../../Datos/base_depurada/LifeExpact_Fertility_dep.csv")
+
+tabla_resumen <- datos %>%
+  filter(year >= 1950) %>%
+  group_by(continent) %>%
+  summarise(
+    EsperanzaVidaMedia = round(mean(life_expectancy, na.rm = TRUE), 1),
+    FertilidadMedia = round(mean(fertility_rate, na.rm = TRUE), 1)
+  )
+
+tabla_resumen %>%
+  kbl(caption = "Indicadores promedio por continente (1950–2019)") %>%
+  kable_styling(full_width = FALSE)
+
+```
+
+## Gráfico principal
+
+```{r pressure}
+
+
+library(ggplot2)
+
+ggplot(datos %>% filter(year >= 1950),
+       aes(x = year, y = life_expectancy, color = continent)) +
+  geom_line(stat = "summary", fun = "mean", size = 1) +
+  labs(
+    title = "Evolución de la esperanza de vida media por continente",
+    x = "Año",
+    y = "Esperanza de vida (años)"
+  ) +
+  theme_minimal()
+
+```
+
