@@ -125,7 +125,18 @@ interpretación es que la reducción de la fertilidad se asocia con mejores cond
 
 Europa y las Américas presentan altos niveles de esperanza de vida y bajas tasas de fertilidad, mientras que África muestra la situación opuesta.
 
+> Nota: Debido a su naturaleza interactiva, el dashboard no puede guardarse como `.html` estático. Se incluye una captura de pantalla en `Dashboard/html/` como referencia visual.
 
+## ¿Cómo visualizar el dashboard interactivo?
+
+Este dashboard está desarrollado con `flexdashboard` y `Shiny`, por lo que se ejecuta como una aplicación interactiva.
+
+### Pasos para visualizarlo:
+
+1. Abre el proyecto en RStudio (`proyectoreto2.Rproj`).
+2. Navega a la carpeta `Dashboard/codigo/` y abre el archivo `dashboard.Rmd`.
+3. Haz clic en **Run Document** (arriba a la izquierda del script).
+4. El dashboard se abrirá en el visor de RStudio o en tu navegador, con filtros interactivos y gráficos dinámicos.
 
 
 
