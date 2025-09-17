@@ -352,8 +352,8 @@ display: none;
 </div>
 
 
-<div id="proyectoreto2" class="section level1">
-<h1>PROYECTORETO2</h1>
+<div id="modulo8_reto2_juliavalverde" class="section level1">
+<h1>MODULO8_RETO2_JULIAVALVERDE</h1>
 <p>Proyecto Ciencia de Datos Reproducible - <strong>Julia
 Valverde</strong><br />
 Máster en Behavioral Data Science<br />
@@ -365,40 +365,66 @@ tiene como objetivo poner en práctica todas las fases de un proyecto de
 depuración de datos hasta la creación de dashboards dinámicos y la
 comunicación de resultados.</p>
 </div>
-<div id="objetivo-principal" class="section level1">
-<h1>Objetivo principal</h1>
-<p>Analizar y comparar la evolución de la esperanza de vida al nacer en
-España y otros países seleccionados utilizando datos de Gapminder, con
-el fin de identificar similitudes y diferencias en las tendencias
-históricas. El proyecto se desarrolla bajo un marco de ciencia de datos
-reproducible, garantizando la trazabilidad en la depuración, análisis y
-comunicación de resultados.</p>
+<div id="audiencia-y-marco-teórico" class="section level1">
+<h1>1. Audiencia y marco teórico</h1>
+<p>El siguiente proyecto está dirigido a investigadores y estudiantes de
+ciencias sociales y psicología, que trabajan con datos demográficos y
+aspectos relacionados con el bienestar social.</p>
+<p>Esta audiencia cuenta con un nivel intermedio o alto de conocimientos
+sobre análisis de datos y comprensión de fenómenos demográficos, por lo
+que requiere una herramienta que ofrezca tanto visión global como
+posibilidad de profundizar en detalles comparativos.</p>
 </div>
-<div id="objetivos-específicos" class="section level1">
-<h1>Objetivos específicos</h1>
+<div id="cuestiones-que-pretende-responder" class="section level1">
+<h1>2. Cuestiones que pretende responder</h1>
+<p>El analisis propuesto y la visualización pretenden responder las
+siguientes cuestiones:</p>
+<ol style="list-style-type: decimal">
+<li><p>¿Cómo ha evolucionado la esperanza de vida en los diferentes
+continentes entre 1950 y 2019?</p></li>
+<li><p>¿Existe relación entre esperanza de vida y fertilidad?</p></li>
+<li><p>¿Cuál es la magnitud de la brecha en la esperanza de vida entre
+Europa y África a lo largo de las décadas?</p></li>
+<li><p>¿Cómo se distribuye la esperanza de vida a nivel mundial en
+momentos clave (por ejemplo 1950, 1980 y 2019)?</p></li>
+</ol>
+<p>Estas cuestiones guiarán el diseño del dashboard, de manera que cada
+gráfico aporte información relevante para una exploración analítica de
+calidad.</p>
+</div>
+<div id="objetivo-principal-del-proyecto" class="section level1">
+<h1>3. Objetivo principal del proyecto:</h1>
+<p>El objetivo principal del proyecto es explorar y visualizar la
+evolución de la esperanza de vida al nacer en distintos países y
+regiones del mundo entre 1950 y 2019 para poder identificar patrones,
+tendencias y desigualdades demográficas a lo largo del tiempo, Se han
+utilizao datos del conjunto de Gapminder (<a href="https://www.gapminder.org/" class="uri">https://www.gapminder.org/</a>).</p>
+</div>
+<div id="objetivos-específicos-del-proyecto" class="section level1">
+<h1>4. Objetivos específicos del proyecto:</h1>
 <p><strong>1. Importar y depurar los datos de esperanza de vida de
 Gapminder.</strong> Asegurar que la información esté limpia y lista para
 el análisis, filtrando los países de interés y gestionando posibles
 valores perdidos.</p>
-<p><strong>2. Transformar los datos a un formato adecuado para análisis
-temporal y comparativo.</strong> Reestructurar la base de datos en
-formato largo, permitiendo trabajar con series temporales de varios
-países y facilitar la comparación entre ellos.</p>
-<p><strong>3. Calcular indicadores descriptivos de la esperanza de
-vida.</strong> Obtener medidas como valores medios, mínimos y máximos
-por país y por período, para resumir la evolución de manera clara.</p>
-<p><strong>4. Visualizar la evolución de la esperanza de vida en España
-y países seleccionados mediante gráficos exploratorios.</strong>
-Representar tendencias históricas comparadas para identificar
-similitudes, diferencias y posibles patrones regionales o
-temporales.</p>
-<p><strong>5. Generar un informe técnico reproducible y una presentación
-con los hallazgos principales.</strong> Comunicar los resultados del
-análisis comparativo mediante R Markdown, garantizando la transparencia
-y reproducibilidad del proyecto.</p>
+<p><strong>2. Recodificar y generar variables relevantes para
+comparaciones y transformar los datos a un formato adecuado para
+análisis temporal y comparativo.</strong> Reestructurar la base de datos
+en formato largo, permitiendo trabajar con series temporales.</p>
+<p><strong>3. Explorar la evolución temporal y regional de la esperanza
+de vida desde 1950 hasta 2019.</strong> Calcular y visualizar tendencias
+medias por continente y resumir patrones relevantes en tablas y
+gráficos.</p>
+<p><strong>4. Analizar la relación entre esperanza de vida y fertilidad
+mediante visualizaciones.</strong> Representar tendencias históricas
+comparadas para identificar similitudes, diferencias y posibles patrones
+regionales o temporales.</p>
+<p><strong>5. Generar un proyecto totalmente reproducible, con informe
+técnico y dashboard, que resuma los hallazgos principales.</strong>
+Comunicar los resultados del análisis comparativo mediante R Markdown,
+garantizando la transparencia y reproducibilidad del proyecto.</p>
 </div>
 <div id="estructura-del-repositorio" class="section level1">
-<h1>Estructura del repositorio</h1>
+<h1>5. Estructura del repositorio</h1>
 <p>Proyecto-Gapminder/</p>
 <p>├── Datos/</p>
 <p>│ ├── base_original/ &lt;- Datos crudos descargados de Gapminder</p>
@@ -419,7 +445,7 @@ carpetas</p>
 <p>└── README.md &lt;- Este archivo</p>
 </div>
 <div id="tecnologías-utilizadas" class="section level1">
-<h1>Tecnologías utilizadas</h1>
+<h1>6. Tecnologías utilizadas</h1>
 <ul>
 <li><strong>RStudio</strong> (IDE principal)<br />
 </li>
@@ -435,13 +461,31 @@ dinámicas)<br />
 <li><strong>LaTeX</strong> (para presentación PDF con formato
 académico)</li>
 </ul>
-<p>Nota: Esta es una versión parcial del proyecto.<br />
-Se ha realizado: - Importación y depuración de datos de esperanza de
-vida en España - Creación de la estructura del repositorio - Base
-depurada lista para análisis</p>
-<p>Pendiente para una versión completa: - Gráficos exploratorios -
-Informe técnico en RMarkdown - Dashboard dinámico - Presentación
-reproducible</p>
+</div>
+<div id="instalación" class="section level1">
+<h1>7. Instalación</h1>
+<p>Este proyecto está desarrollado en R con soporte para RMarkdown.</p>
+<p><strong>Paquetes utilizados:</strong></p>
+<p>tidyverse</p>
+<p>dplyr</p>
+<p>ggplot2</p>
+<p>readr</p>
+<p>countrycode</p>
+<p>here</p>
+</div>
+<div id="reproducir-el-entorno-e-instrucciones-de-uso" class="section level1">
+<h1>8. Reproducir el entorno e instrucciones de uso</h1>
+</div>
+<div id="conclusiones" class="section level1">
+<h1>9. Conclusiones</h1>
+<p>La esperanza de vida ha aumentado en todos los continentes entre 1950
+y 2019, aunque con desigualdades.</p>
+<p>La fertilidad muestra una correlación negativa con la esperanza de
+vida: los países con menor fertilidad suelen tener una mayor longevidad.
+Dicha correlación no implica causalidad.</p>
+<p>Europa y las Américas presentan altos niveles de esperanza de vida y
+bajas tasas de fertilidad, mientras que África muestra la situación
+opuesta.</p>
 </div>
 
 

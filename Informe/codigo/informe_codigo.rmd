@@ -27,27 +27,46 @@ knitr::opts_chunk$set(
 )
 
 ```
-# Introducción
+## Introducción
 
-Este informe forma parte de un proyecto de **ciencia de datos reproducible**.  
-El objetivo principal es analizar y comparar la evolución de la **esperanza de vida** en España, Francia, Italia y Alemania utilizando datos de Gapminder.  
+La **esperanza de vida al nacer** (Life Expectancy at Birth) es uno de los indicadores más utilizados para medir el desarrollo y bienestar de una población. Representa el promedio de años que viviría un recién nacido si las tasas de mortalidad observadas en el momento de su nacimiento se mantuvieran constantes a lo largo de su vida. Su estudio nos permite comprender la evolución demográfica global en las últimas décadas. 
 
-# Objetivos
+## Objetivos
 
-- Importar y depurar los datos de los países seleccionados.  
-- Transformar los datos a un formato adecuado para análisis temporal.  
-- Calcular indicadores descriptivos de esperanza de vida.  
-- Visualizar comparativamente la evolución histórica.  
-- Comunicar los hallazgos de forma reproducible. 
+El objetivo principal de este proyecto es analizar la evolución de la esperanza de vida en los distintos continentes entre los años 1950 y 2019, utilizando datos de Gapminder (https://www.gapminder.org/).
 
-# Datos 
+Como complemento, se estudiará la relación entre esperanza de vida y fertilidad para explorar cómo las dinámicas demográficas influyen en la longevidad de la población.
+
+Los objetivos específicos son:
+
+- Depurar y transformar los datos en un formato adecuado para el análisis.
+
+- Describir la evolución de la esperanza de vida en los continentes.
+
+- Analizar la relación entre esperanza de vida y tasa de fertilidad.
+
+Se pretender responder a las siguientes cuestiones: 
+
+- ¿Cómo ha evolucionado la esperanza de vida en los diferentes continentes entre 
+1950 y 2019? 
+
+- ¿Existe relación entre esperanza de vida y fertilidad? 
+ 
+- ¿Cuál es la magnitud de la brecha en la esperanza de vida entre Europa y África a lo 
+largo de las décadas? 
+
+- ¿Cómo se distribuye la esperanza de vida a nivel mundial en momentos clave (por 
+ejemplo 1950, 1980 y 2019)?
+
+
+## Datos 
 
 ```{r, message=FALSE, warning=FALSE}
 
 install.packages("here")
 install.packages("kableExtra")
 
-datos <- read_csv(here("Datos/base_depurada/LifeExpact_dep.csv"))
+datos <- read_csv(here("Datos/base_depurada/LifeExpact_Fertility_dep.csv"))
 
 head(datos)
 
@@ -57,57 +76,53 @@ head(datos)
 
 ```{r}
 
-tabla_resume <- datos %>% 
-  group_by(country) %>% 
-  summarise(
-    Mean = mean(life_expectancy, na.rm = TRUE),
-    SD   = sd(life_expectancy, na.rm = TRUE),
-    Min  = min(life_expectancy, na.rm = TRUE),
-    Max  = max(life_expectancy, na.rm = TRUE),
-    .groups = 'drop'
-  ) %>% 
-  as.data.frame() %>% 
-  kable() %>% 
-  kable_styling("striped")
+datos <- read_csv("../../Datos/base_depurada/LifeExpact_Fertility_dep.csv")
 
-tabla_resume
+tabla_resumen <- datos %>%
+  filter(year >= 1950) %>%
+  group_by(continent) %>%
+  summarise(
+    EsperanzaVidaMedia = round(mean(life_expectancy, na.rm = TRUE), 1),
+    FertilidadMedia = round(mean(fertility_rate, na.rm = TRUE), 1)
+  )
+
+tabla_resumen %>%
+  kbl(caption = "Promedios de esperanza de vida y fertilidad por continente (1950–2019)") %>%
+  kable_styling(full_width = FALSE, position = "center")
+
 
 ```
 
-# Gráfico comparativo
+# Evolucion de la esperanza de vida 
 
 ```{r}
 
-## Gráfico comparativo de la evolución entre países 
-
-ggplot(datos, aes(x = year, y = life_expectancy, color = country)) +
-  geom_line(size = 1) +
+ggplot(datos %>% filter(year >= 1950),
+       aes(x = year, y = life_expectancy, color = continent)) +
+  geom_line(stat = "summary", fun = "mean", size = 1) +
   labs(
-    title = "Evolución de la esperanza de vida",
+    title = "Evolución de la esperanza de vida media por continente (1950–2019)",
     x = "Año",
     y = "Esperanza de vida (años)"
   ) +
   theme_minimal()
 
-```
 
-```{r, nombre_chunk}
+``` 
 
-# Seleccionar solo los años de interés
-datos_analisis <- datos %>%
-  filter(year %in% c(1950, 2020)) %>%
-  group_by(year, country) %>%
-  summarise(
-    Life_Expectancy = round(mean(life_expectancy, 1))
-  ) %>%
-  ungroup()
+# Relación entre esperanza de vida y fertilidad 
 
-# Pivotar para tener columnas por año
-tabla_comp <- datos_analisis %>%
-  pivot_wider(names_from = year, values_from = Life_Expectancy)
+```{r}
 
-# Mostrar tabla bonita
-tabla_comp %>%
-  kable("html", caption = "Comparación de esperanza de vida: 1950 vs 2020") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
+ggplot(datos %>% filter(year >= 1950),
+       aes(x = year, y = life_expectancy, color = continent)) +
+  geom_line(stat = "summary", fun = "mean", size = 1) +
+  labs(
+    title = "Evolución de la esperanza de vida media por continente (1950–2019)",
+    x = "Año",
+    y = "Esperanza de vida (años)"
+  ) +
+  theme_minimal()
+
+
 

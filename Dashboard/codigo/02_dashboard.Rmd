@@ -5,7 +5,6 @@ output:
     orientation: columns
     vertical_layout: fill
 runtime: shiny
-
 ---
 
 Column {data-width=300}
@@ -116,7 +115,7 @@ renderPlot({
 
 ```
 
-Column {data-width=350}
+Column {data-width=450}
 -----------------------------------------------------------------------
 
 ### Relación entre esperanza de vida y fertilidad 
@@ -150,7 +149,7 @@ renderPlot({
 
 ```
 
-Column {data-width=350}
+Column {data-width=450}
 -----------------------------------------------------------------------
 
 ### Evolución temporal de la esperanza de vida por continente
